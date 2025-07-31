@@ -1,4 +1,4 @@
-# src/myframework/__init__.py
+# src/zWebApi/__init__.py
 from fastapi import APIRouter as zRouter
 from .app import create_app
 from .exceptions import Panic

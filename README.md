@@ -45,6 +45,12 @@ pip install zWebApi
 pip install zWebApi -i https://pypi.tuna.tsinghua.edu.cn/simple/
 ```
 
+## 打包
+```bash
+python -m build
+twine upload dist/*
+```
+
 ## 快速开始
 ### 1. 项目结构
 创建一个符合框架约定的项目目录结构：
@@ -269,7 +275,7 @@ def some_business_logic(user_id):
 + **格式**: `[级别][年月日时分秒][文件名][行号]: 消息`
     - 例如: `[INFO][20240521180000][app.py][150]: 应用创建完成。`
     - 例如: `[ERROR][20240521180001][user.py][30]: 无效的用户ID`
-+ **输出**: 同时记录到控制台（开发）和项目根目录下的 `myframework.log` 文件。
++ **输出**: 同时记录到控制台（开发）和项目根目录下的 `weblog.log` 文件。
 + **轮转**: 使用 `TimedRotatingFileHandler`，默认每10天轮转一次日志文件。
 + **查看**: 提供内置 API 接口 `GET /<title>/api/error/logs` 查看日志内容。
     - 可通过 `?lines=N` 参数指定返回最后 N 行。

@@ -1,4 +1,4 @@
-# src/myframework/signature_enforcer.py
+# src/zWebApi/signature_enforcer.py
 """强制执行路由处理函数的特定函数签名。"""
 import inspect
 import functools

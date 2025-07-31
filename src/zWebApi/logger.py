@@ -1,5 +1,5 @@
-# src/myframework/logger.py
-"""MyFramework 日志配置和管理。"""
+# src/zWebApi/logger.py
+"""zWebApi 日志配置和管理。"""
 import logging
 import os
 from logging.handlers import TimedRotatingFileHandler
@@ -7,16 +7,16 @@ from datetime import datetime, timedelta
 import glob
 
 # --- 定义日志文件名 ---
-LOG_FILENAME = "myframework.log"
+LOG_FILENAME = "weblog.log"
 
 # --- 自定义日志格式器 ---
-class MyFrameworkFormatter(logging.Formatter):
+class zWebApiLogFormatter(logging.Formatter):
     """自定义日志格式化器。"""
     def format(self, record):
         # 获取当前时间
         dt = datetime.fromtimestamp(record.created)
         # 格式化时间
-        time_str = dt.strftime("%Y%m%d%H%M%S")
+        time_str = dt.strftime("%Y-%m-%d %H:%M:%S")
         # 获取日志级别 (INFO, ERROR, WARNING, DEBUG, CRITICAL)
         level_tag = record.levelname
         # 获取文件名（record.pathname 是完整路径）
@@ -31,7 +31,7 @@ class MyFrameworkFormatter(logging.Formatter):
 # --- 配置日志记录器 ---
 def configure_logger(log_level: int = logging.INFO, logs_dir: str = "."):
     """
-    配置 MyFramework 的全局日志记录器。
+    配置 zWebApiLog 的全局日志记录器。
 
     Args:
         log_level (int): 日志级别。默认为 INFO。
@@ -41,8 +41,8 @@ def configure_logger(log_level: int = logging.INFO, logs_dir: str = "."):
     os.makedirs(logs_dir, exist_ok=True)
     log_file_path = os.path.join(logs_dir, LOG_FILENAME)
 
-    # 获取或创建 'myframework' 记录器
-    logger = logging.getLogger("myframework")
+    # 获取或创建 'zWebApi' 记录器
+    logger = logging.getLogger("zWebApi")
     logger.setLevel(log_level)
 
     # 避免重复添加处理器
@@ -53,25 +53,25 @@ def configure_logger(log_level: int = logging.INFO, logs_dir: str = "."):
             log_file_path, when="D", interval=10, backupCount=5, encoding='utf-8'
         )
         file_handler.setLevel(log_level)
-        file_formatter = MyFrameworkFormatter()
+        file_formatter = zWebApiLogFormatter()
         file_handler.setFormatter(file_formatter)
         logger.addHandler(file_handler)
 
         # 2. 控制台处理器 (用于开发)
         console_handler = logging.StreamHandler()
         console_handler.setLevel(log_level)
-        console_formatter = MyFrameworkFormatter() # 可以使用不同格式
+        console_formatter = zWebApiLogFormatter() # 可以使用不同格式
         console_handler.setFormatter(console_formatter)
         logger.addHandler(console_handler)
         
-        logger.info(f"MyFramework 日志已配置，日志文件: {log_file_path}")
+        logger.info(f"zWebApi 日志已配置，日志文件: {log_file_path}")
 
     return logger
 
 # --- 获取已配置的记录器实例 ---
 def get_logger():
-    """获取 'myframework' 记录器实例。"""
-    return logging.getLogger("myframework")
+    """获取 'zWebApi' 记录器实例。"""
+    return logging.getLogger("zWebApi")
 
 # --- 清理旧日志文件 ---
 def cleanup_old_logs(logs_dir: str = ".", keep_days: int = 30):

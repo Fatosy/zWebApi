@@ -1,5 +1,5 @@
-# src/myframework/exceptions.py
-"""MyFramework 的自定义异常。"""
+# src/zWebApi/exceptions.py
+"""zWebApi 的自定义异常。"""
 
 class Panic(Exception):
     """
