@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"] # 确保 setuptools 版本较新
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "zWebApi" # 包名，必须在 PyPI 上唯一
+# --- 确保版本号是新的 ---
+version = "0.11.0" # <-- 更新到最新版本
+description = "一个功能丰富、开箱即用的 Python Web 框架，基于 FastAPI 构建。"
+readme = "README.md"
+# --- 建议添加更多元数据 ---
+license = {text = "MIT"}
+authors = [
+  {name = "Fatosy", email = "fatosy@163.com"}, # <-- 修改为你的信息
+]
+keywords = ["zWebApi", "fastapi", "framework", "web", "api"] # <-- 添加关键字
+classifiers = [ # <-- 添加分类器，有助于在 PyPI 上发现
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Topic :: Software Development :: Libraries :: Application Frameworks",
+  "License :: OSI Approved :: MIT License",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+]
+requires-python = ">=3.8" # <-- 指定支持的 Python 版本
+dependencies = [
+    "fastapi>=0.95.0,<1.0.0",
+    "uvicorn[standard]>=0.21.0,<1.0.0",
+    "python-dotenv>=1.1.1",
+    "redis>=6.2.0",
+    "kazoo>=2.10.0",
+    "pymysql>=1.1.1",
+    "sqlalchemy>=2.0.41"
+]
+
+# --- 确保包含 README 和 LICENSE 文件 ---
+[project.urls]
+Homepage = "https://github.com/Fatosy/zWebApi" # <-- 修改为你的项目主页
+Repository = "https://github.com/Fatosy/zWebApi.git"
+
+# --- 确保正确找到并包含包 ---
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+# --- 可选：包含额外文件 ---
+[tool.setuptools]
+include-package-data = true

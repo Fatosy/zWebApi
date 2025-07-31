@@ -1,0 +1,5 @@
+python-dotenv==1.1.1
+redis==6.2.0
+kazoo==2.10.0
+pymysql==1.1.1
+sqlalchemy==2.0.41
