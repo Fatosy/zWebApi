@@ -55,7 +55,7 @@ rm -rf dist src/*.egg-info
 ## 脚本打包
 ```bash
 ./py_build.sh <env_name> build
-./py_build.sh <env_name> upload
+./py_build.sh <env_name> upload <pypi api token>
 ./py_build.sh <env_name> delete
 ```
 

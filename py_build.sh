@@ -47,16 +47,14 @@ case "$COMMAND" in
         echo "执行: twine upload dist/* (自动输入 token)"
         expect << EOF
 spawn twine upload dist/*
-expect "Enter your username: "
-send "__token__\r"
-expect "Enter your password: "
+expect "Enter your API token:"
 send "$API_TOKEN\r"
 expect eof
 EOF
         ;;
     delete)
         echo "执行: 删除 dist 和 *.egg-info"
-        rm -rf dist *.egg-info
+        rm -rf dist src/*.egg-info
         echo "清理完成。"
         ;;
     *)
