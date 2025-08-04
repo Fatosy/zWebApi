@@ -18,7 +18,7 @@ from . import logger
 # --- 辅助函数：读取日志文件 ---
 def _read_log_file(lines: int = 100):
     """读取日志文件的最后 N 行。"""
-    log_path = os.path.join(".", logger.LOG_FILENAME) # 假设在项目根目录
+    log_path = os.path.join("logs", logger.LOG_FILENAME) # 假设在项目根目录
     if not os.path.exists(log_path):
         return "日志文件不存在。"
     try:

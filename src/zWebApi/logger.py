@@ -72,7 +72,7 @@ class ColoredLogFormatter(logging.Formatter):
             colored_message += f"\n{self.formatException(record.exc_info)}"
         
         # 用[log start]和[log end]包装消息
-        formatted_log = f"\n[log start]\n{colored_message}\n[log end]\n"
+        formatted_log = f"[log start]\n{colored_message}\n[log end]\n"
         
         return formatted_log
 
