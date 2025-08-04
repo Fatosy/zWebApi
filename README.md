@@ -49,6 +49,7 @@ pip install zWebApi -i https://pypi.tuna.tsinghua.edu.cn/simple/
 ```bash
 python -m build
 twine upload dist/*
+rm -rf dist src/*.egg-info
 ```
 
 ## 快速开始
