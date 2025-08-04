@@ -37,9 +37,11 @@ def configure_logger(log_level: int = logging.INFO, logs_dir: str = "."):
         log_level (int): 日志级别。默认为 INFO。
         logs_dir (str): 存放日志文件的目录。默认为当前目录 ('.')。
     """
+    # 设置日志目录为项目根目录下的 log 文件夹
+    log_directory = os.path.join(logs_dir, "logs")
     # 确保日志目录存在
-    os.makedirs(logs_dir, exist_ok=True)
-    log_file_path = os.path.join(logs_dir, LOG_FILENAME)
+    os.makedirs(log_directory, exist_ok=True)
+    log_file_path = os.path.join(log_directory, LOG_FILENAME)
 
     # 获取或创建 'zWebApi' 记录器
     logger = logging.getLogger("zWebApi")
@@ -48,9 +50,9 @@ def configure_logger(log_level: int = logging.INFO, logs_dir: str = "."):
     # 避免重复添加处理器
     if not logger.handlers:
         # 1. 文件处理器 (带轮转)
-        # when='D' 表示按天轮转, interval=10 表示每10天轮转一次
+        # when='D' 表示按天轮转, interval=10 表示每10天轮转一次，backupCount=6 表示保留6个历史文件
         file_handler = TimedRotatingFileHandler(
-            log_file_path, when="D", interval=10, backupCount=5, encoding='utf-8'
+            log_file_path, when="D", interval=10, backupCount=6, encoding='utf-8'
         )
         file_handler.setLevel(log_level)
         file_formatter = zWebApiLogFormatter()
