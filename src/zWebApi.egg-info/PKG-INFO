@@ -1,3 +1,33 @@
+Metadata-Version: 2.4
+Name: zWebApi
+Version: 0.11.5
+Summary: 一个功能丰富、开箱即用的 Python Web 框架，基于 FastAPI 构建。
+Author-email: Fatosy <fatosy@163.com>
+License: MIT
+Project-URL: Homepage, https://github.com/Fatosy/zWebApi
+Project-URL: Repository, https://github.com/Fatosy/zWebApi.git
+Keywords: zWebApi,fastapi,framework,web,api
+Classifier: Development Status :: 4 - Beta
+Classifier: Intended Audience :: Developers
+Classifier: Topic :: Software Development :: Libraries :: Application Frameworks
+Classifier: License :: OSI Approved :: MIT License
+Classifier: Programming Language :: Python :: 3
+Classifier: Programming Language :: Python :: 3.8
+Classifier: Programming Language :: Python :: 3.9
+Classifier: Programming Language :: Python :: 3.10
+Classifier: Programming Language :: Python :: 3.11
+Requires-Python: >=3.8
+Description-Content-Type: text/markdown
+License-File: LICENSE
+Requires-Dist: fastapi<1.0.0,>=0.95.0
+Requires-Dist: uvicorn[standard]<1.0.0,>=0.21.0
+Requires-Dist: python-dotenv>=1.1.1
+Requires-Dist: redis>=6.2.0
+Requires-Dist: kazoo>=2.10.0
+Requires-Dist: pymysql>=1.1.1
+Requires-Dist: sqlalchemy>=2.0.41
+Dynamic: license-file
+
 # zWebApi
 一个功能丰富、开箱即用的 Python Web 框架，基于 FastAPI 构建。它旨在通过约定优于配置的原则，简化 API 开发流程，提供自动路由、统一异常处理、日志记录和可扩展工具集。
 
@@ -50,13 +80,6 @@ pip install zWebApi -i https://pypi.tuna.tsinghua.edu.cn/simple/
 python -m build
 twine upload dist/*
 rm -rf dist src/*.egg-info
-```
-
-## 脚本打包
-```bash
-./py_build.sh <env_name> build
-./py_build.sh <env_name> upload
-./py_build.sh <env_name> delete
 ```
 
 ## 快速开始

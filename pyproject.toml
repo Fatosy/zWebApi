@@ -5,7 +5,7 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "zWebApi" # 包名，必须在 PyPI 上唯一
 # --- 确保版本号是新的 ---
-version = "0.11.3" # <-- 更新到最新版本
+version = "0.11.5" # <-- 更新到最新版本
 description = "一个功能丰富、开箱即用的 Python Web 框架，基于 FastAPI 构建。"
 readme = "README.md"
 # --- 建议添加更多元数据 ---

@@ -18,7 +18,7 @@ def register_routes(app: FastAPI, actions_dir: str = "action", base_prefix: str 
     if not os.path.isdir(actions_dir):
         error_msg = f"未找到 Action 目录 '{actions_dir}'。"
         app_logger.error(error_msg)
-        print(error_msg) # 保持原有的 print 作为备用
+        # print(error_msg) # 保持原有的 print 作为备用
         return
 
     for module_name in os.listdir(actions_dir):
@@ -35,7 +35,7 @@ def register_routes(app: FastAPI, actions_dir: str = "action", base_prefix: str 
                 except Exception as e:
                     error_msg = f"从 {router_file} 导入路由器失败: {e}"
                     app_logger.error(error_msg, exc_info=True)
-                    print(error_msg)
+                    # print(error_msg)
                     continue # 跳过这个模块，继续处理其他模块
 
                 router = getattr(module, 'router', None)
@@ -48,15 +48,17 @@ def register_routes(app: FastAPI, actions_dir: str = "action", base_prefix: str 
                         app.include_router(router, prefix=full_prefix)
                         success_msg = f"已注册（并强制执行签名）来自 {router_file} 的路由器，完整前缀为 {full_prefix}"
                         app_logger.info(success_msg)
-                        print(success_msg)
+                        # print(success_msg)
                     except Exception as e: # 捕获 enforce_signature 或 include_router 可能抛出的异常
                         error_msg = f"注册路由器 {router_file} 时失败: {e}"
                         app_logger.error(error_msg, exc_info=True)
-                        print(error_msg)
+                        # print(error_msg)
                         # 可以选择 raise 或者 continue
+                        raise
                 else:
                     warn_msg = f"在 {router_file} 中未找到有效的 'router'"
                     app_logger.warning(warn_msg)
-                    print(warn_msg)
+                    # print(warn_msg)
+                    raise
 
     app_logger.info("Action 目录扫描和路由注册完成。")

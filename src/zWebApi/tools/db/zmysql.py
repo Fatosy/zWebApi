@@ -1,5 +1,8 @@
 import pymysql
 import os
+from ... import logger
+
+sql_logger = logger.get_logger()
 
 class MysqlSession:
     def __init__(self):
@@ -26,7 +29,7 @@ class MysqlSession:
             try:
                 self.connection.commit()
             except Exception as e:
-                print(f"事务提交异常: {e}")
+                sql_logger.error(f"事务提交异常: {e}")
                 self.connection.rollback()
             finally:
                 self.connection.close()
