@@ -28,6 +28,54 @@ class zWebApiLogFormatter(logging.Formatter):
             log_message += f"\n{self.formatException(record.exc_info)}"
         return log_message
 
+# --- 带颜色和标识符的日志格式器 ---
+class ColoredLogFormatter(logging.Formatter):
+    """
+    带颜色和标识符的日志格式化器。
+    
+    [log start]开始，[log end]结束，
+    错误信息显示红色，警告信息显示黄色等
+    """
+    
+    # ANSI颜色代码
+    COLORS = {
+        'ERROR': '\033[91m',    # 红色
+        'WARNING': '\033[93m',  # 黄色
+        'INFO': '\033[94m',     # 蓝色
+        'DEBUG': '\033[96m',    # 青色
+        'CRITICAL': '\033[95m', # 紫色
+        'RESET': '\033[0m'      # 重置颜色
+    }
+    
+    def format(self, record):
+        # 获取当前时间
+        dt = datetime.fromtimestamp(record.created)
+        # 格式化时间
+        time_str = dt.strftime("%Y-%m-%d %H:%M:%S")
+        # 获取日志级别
+        level_tag = record.levelname
+        # 获取文件名
+        filename = os.path.basename(record.pathname)
+        
+        # 构建日志消息内容
+        message_content = record.getMessage()
+        
+        # 根据日志级别添加颜色
+        color_start = self.COLORS.get(level_tag, '')
+        color_end = self.COLORS['RESET'] if color_start else ''
+        
+        # 构建带颜色的消息
+        colored_message = f"{color_start}[{level_tag}][{time_str}][{filename}][{record.lineno}]: {message_content}{color_end}"
+        
+        # 添加异常信息（如果存在）
+        if record.exc_info:
+            colored_message += f"\n{self.formatException(record.exc_info)}"
+        
+        # 用[log start]和[log end]包装消息
+        formatted_log = f"\n[log start]\n{colored_message}\n[log end]\n"
+        
+        return formatted_log
+
 # --- 配置日志记录器 ---
 def configure_logger(log_level: int = logging.INFO, logs_dir: str = "."):
     """
@@ -52,17 +100,17 @@ def configure_logger(log_level: int = logging.INFO, logs_dir: str = "."):
         # 1. 文件处理器 (带轮转)
         # when='D' 表示按天轮转, interval=10 表示每10天轮转一次，backupCount=6 表示保留6个历史文件
         file_handler = TimedRotatingFileHandler(
-            log_file_path, when="D", interval=10, backupCount=6, encoding='utf-8'
+            log_file_path, when="D", interval=10, backupCount=6, encoding='utf-8',
         )
         file_handler.setLevel(log_level)
-        file_formatter = zWebApiLogFormatter()
+        file_formatter = ColoredLogFormatter()
         file_handler.setFormatter(file_formatter)
         logger.addHandler(file_handler)
 
         # 2. 控制台处理器 (用于开发)
         console_handler = logging.StreamHandler()
         console_handler.setLevel(log_level)
-        console_formatter = zWebApiLogFormatter() # 可以使用不同格式
+        console_formatter = ColoredLogFormatter() # 可以使用不同格式
         console_handler.setFormatter(console_formatter)
         logger.addHandler(console_handler)
         
@@ -76,7 +124,7 @@ def get_logger():
     return logging.getLogger("zWebApi")
 
 # --- 清理旧日志文件 ---
-def cleanup_old_logs(logs_dir: str = ".", keep_days: int = 30):
+def cleanup_old_logs(logs_dir: str = ".", keep_days: int = 60):
     """
     清理超过指定天数的日志文件。
     注意：TimedRotatingFileHandler 会自动处理轮转，这个函数是额外的清理保障。
